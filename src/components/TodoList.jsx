@@ -126,7 +126,7 @@ const TodoList = () => {
                     {todo.userId}
                   </td>
                   <td className="border px-4 py-2">
-                    {todo.completed ? "Done" : <VscDash />}
+                    {todo.completed ? <span className="text-green-500">Done</span> : <VscDash className="text-red-400" />}
                   </td>
                 </tr>
               )) : (
