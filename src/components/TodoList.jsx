@@ -106,13 +106,13 @@ const TodoList = () => {
                 <th scope="col" className="border px-0 sm:px-4 py-2">
                   #
                 </th>
-                <th scope="col" className="border px-4 py-2">
+                <th scope="col" className="border px-1 sm:px-4 py-2">
                   Title
                 </th>
-                <th scope="col" className="border px-4 py-2">
+                <th scope="col" className="border px-1 sm:px-4 py-2">
                   UserID
                 </th>
-                <th scope="col" className="border px-4 py-2">
+                <th scope="col" className="border px-1 sm:px-4 py-2">
                   Status
                 </th>
               </tr>
