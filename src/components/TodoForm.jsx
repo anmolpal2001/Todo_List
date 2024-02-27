@@ -1,34 +1,38 @@
 import React, { useState } from "react";
 
-const TodoForm = ({length}) => {
+const TodoForm = ({ length, todoForm }) => {
   const [userId, setUserId] = useState("");
   const [title, setTitle] = useState("");
   const [completed, setCompleted] = useState(false);
 
   const addTodo = async (e) => {
     e.preventDefault();
-    try{
+    try {
       length = length + 1;
-      if(userId === "" || title === ""){
+      if (userId === "" || title === "") {
         alert("Please fill in all fields");
         return;
       }
-      const response = await fetch("https://jsonplaceholder.typicode.com/todos", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          id: length,
-          userId: userId,
-          title: title,
-          completed: completed,
-        }),
-      });
+      const response = await fetch(
+        "https://jsonplaceholder.typicode.com/todos",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            id: length,
+            userId: userId,
+            title: title,
+            completed: completed,
+          }),
+        }
+      );
       const data = await response.json();
       console.log(data);
-
-    }catch(error){
+      todoForm((prev) => !prev);
+      alert("Todo added successfully");
+    } catch (error) {
       console.log(error);
     }
   };
@@ -41,9 +45,13 @@ const TodoForm = ({length}) => {
       e.preventDefault();
     }
   };
+
+  const handleSubmit = (e) => {
+    addTodo();
+  };
   return (
     <div className="w-[90vw] lg:w-[50vw] mx-auto my-10">
-      <form>
+      <form onSubmit={handleSubmit}>
         <div className="w-full flex flex-col my-5">
           <label htmlFor="todo" className="text-[15px]">
             Todo
@@ -69,9 +77,7 @@ const TodoForm = ({length}) => {
             />
           </div>
           <div className="md:w-1/2 flex flex-col w-full mt-5 sm:mt-0">
-            <label htmlFor="completed">
-              Completed
-            </label>
+            <label htmlFor="completed">Completed</label>
             <select
               name="completed"
               id="completed"
@@ -84,12 +90,15 @@ const TodoForm = ({length}) => {
             </select>
           </div>
         </div>
-        
-        <button type="button" onSubmit={addTodo} className="py-4 text-white text-xl bg-blue-600 w-full">
+
+        <button
+          type="button"
+          onClick={addTodo}
+          className="py-4 text-white text-xl bg-blue-600 w-full"
+        >
           Add
         </button>
       </form>
-      
     </div>
   );
 };

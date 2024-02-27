@@ -12,6 +12,7 @@ const TodoList = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [filteredTodos, setFilteredTodos] = useState([]);
   const itemsPerPage = 50;
+  const [loading, setLoading] = useState(false);
 
   const tableRef = useRef(null);
 
@@ -19,13 +20,16 @@ const TodoList = () => {
 
   const getTodos = async () => {
     try {
+      setLoading(true);
       const response = await fetch(
         "https://jsonplaceholder.typicode.com/todos"
       );
       const data = await response.json();
       setTodos(data);
+      setLoading(false);
     } catch (error) {
       console.log(error);
+      setLoading(false);
     }
   };
 
@@ -82,8 +86,8 @@ const TodoList = () => {
         Todo List App
       </nav>
       <section className="my-10">
-        <SearchTodo handleFilterSearch={handleFilterSearch} />
-        {todoForm && <TodoForm length={length} />}
+        <SearchTodo handleFilterSearch={handleFilterSearch}  />
+        {todoForm && <TodoForm length={length} todoForm={setTodoForm} />}
         <div className="flex justify-center lg:w-[50vw] w-[90vw] mx-auto">
           <button
             onClick={() => setTodoForm((prev) => !prev)}
@@ -114,7 +118,7 @@ const TodoList = () => {
               </tr>
             </thead>
             <tbody>
-              {currentTodos.map((todo) => (
+              {!loading ? currentTodos.map((todo) => (
                 <tr key={todo.id}>
                   <td className="text-center border px-4 py-2">{todo.id}</td>
                   <td className="border px-4 py-2">{todo.title}</td>
@@ -125,7 +129,13 @@ const TodoList = () => {
                     {todo.completed ? "Done" : <VscDash />}
                   </td>
                 </tr>
-              ))}
+              )) : (
+                <tr>
+                  <td colSpan="4" className="text-center py-4">
+                    Loading...
+                  </td>
+                </tr>
+              )}
             </tbody>
           </table>
 
