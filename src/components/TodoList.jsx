@@ -96,7 +96,7 @@ const TodoList = () => {
         </div>
 
         <div ref={tableRef} className="relative overflow-x-auto shadow-md w-[90vw] lg:w-[50%] mx-auto mt-10">
-          <table className="table-auto w-[80vw] lg:w-[50vw] mt-10 mx-auto overflow-x-auto overflow-y-hidden">
+          <table className="table-auto w-[100vw] lg:w-[50vw] mt-10 mx-auto overflow-x-auto overflow-y-hidden">
             <thead className="bg-gray-800 text-white">
               <tr>
                 <th scope="col" className="border px-0 sm:px-4 py-2">
